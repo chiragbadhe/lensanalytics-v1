@@ -11,7 +11,7 @@ function Header() {
 					<span className="text-[#AAFE2E]">Lens</span><span className='pl-0 sm:pl-[10px]'> Analytics</span>
 				</p>
 				<p className="pt-[15px] text-[16px] font-bold text-[#A1A1A1]">
-					The most followed Lens accounts and metrics on Lens Ecosystem 🌿
+					Leaderboard and metrics on Lens Ecosystem 🌿
 				</p>
 			</div>
 		</div>
