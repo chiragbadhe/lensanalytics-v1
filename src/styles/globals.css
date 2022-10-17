@@ -1,0 +1,19 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+
+body {
+    color: #E7E7E7;
+    background: #151617;
+    font-family: 'Open Sans',serif;
+
+  }
+
+
+
+/* 
+  :root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+} */
+
