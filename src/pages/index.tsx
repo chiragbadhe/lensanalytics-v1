@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from 'next/head'
 import Image from 'next/image'
 import { Filter } from '@/types/ui'
@@ -7,6 +8,7 @@ import { LensProfile } from '@/types/lens'
 import Header from '@/components/HeaderCard'
 import ProfileCard from '@/components/ProfileCard'
 import HeaderStats from '@/components/HeaderStats'
+import DownArrow from '../assets/images/arrow-down.svg'
 import { FC, useEffect, useMemo, useState } from 'react'
 import EXPLORE_PROFILES from '@/queries/explore-profiles'
 
@@ -27,11 +29,6 @@ const filters: Record<'followers' | 'posts' | 'collects' | 'active', Filter> = {
 		item: (profile: LensProfile) => profile.stats.totalPublications,
 	},
 	collects: { label: 'Collects', key: 'MOST_COLLECTS', item: (profile: LensProfile) => profile.stats.totalCollects },
-}
-
-const meta = {
-	title: `Lens Leaderboard: Most followed, active, collected & shared profiles`,
-	description: `Get stats.`,
 }
 
 const Home: FC = () => {
@@ -58,7 +55,7 @@ const Home: FC = () => {
 		window.addEventListener('scroll', handleScroll)
 	}, [])
 
-	const shoNavOnScroll = scrollY > 300
+	const showNavOnScroll = scrollY > 300
 
 	const changeFilter = (filter: Filter) => {
 		setFilter(filter)
@@ -74,16 +71,7 @@ const Home: FC = () => {
 	return (
 		<>
 			<Head>
-				<title>{meta.title}</title>
-				<meta name="title" content={meta.title} />
-				<meta name="description" content={meta.description} />
-				<meta property="og:type" content="website" />
-				<meta property="og:title" content={meta.title} />
-				<meta property="og:description" content={meta.description} />
-				<meta property="twitter:card" content="summary_large_image" />
-				<meta property="twitter:title" content={meta.title} />
-				<meta property="twitter:description" content={meta.description} />
-				<link rel="shortcut icon" href="/favicon.ico" />
+
 			</Head>
 			<div className="container mx-auto max-w-[1200px]">
 				<div className="px-[20px] sm:px-0">
@@ -91,7 +79,7 @@ const Home: FC = () => {
 					<HeaderStats />
 					<div
 						className={`flex items-end sm:items-center justify-between sm:flex-row flex-col   ${
-							shoNavOnScroll
+							showNavOnScroll
 								? 'py-[20px] fixed top-0 sm:w-[1300px] sm:-ml-[50px] z-20 transition bg-[#151617] shadow-[0_40px_60px_-30px_rgba(0,0,0,0.3)] hidden sm:flex'
 								: 'mt-[50px]'
 						}`}
@@ -101,6 +89,26 @@ const Home: FC = () => {
 							searchInput={searchInput}
 							setSearchResult={setSearchResult}
 						/>
+
+						{showNavOnScroll ? (
+							<div className="items-center flex flex-col hover:text-white">
+								<Image
+									width={16}
+									height={16}
+									src={DownArrow}
+									alt="down-arrow"
+									className="transform rotate-180"
+								/>
+								<button
+									className="button duration-400 text-[16px] text-[#E7E7E7]/20"
+									onClick={() => window.scrollTo(0, 0)}
+								>
+									Scroll To Top
+								</button>
+							</div>
+						) : (
+							''
+						)}
 
 						<div className="flex flex-col items-start space-y-[10px] mt-[15px]">
 							<div className="flex items-center space-x-4 text-white relative ">

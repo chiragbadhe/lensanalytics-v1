@@ -15,7 +15,7 @@ const ProfileCard: FC<{ profile: LensProfile; i: number; filter: Filter; loading
 }) => {
 	return (
 		<table className="table-fixed sm:w-full text-left  w-[700px] overflow-x-scroll">
-			<tbody className=" py-[15px] text-left border-b-2 border-[#3B3E3E]/20   text-[#A1A1A1]">
+			<tbody className=" py-[15px] text-left border-b-2 border-[#3B3E3E]/20 ">
 				<tr className="hover:bg-[#101010] hover:text-[#AAFE2E] transition duration-100">
 					<td className="w-[70px]  text-center">
 						{!loading ? (
@@ -26,11 +26,11 @@ const ProfileCard: FC<{ profile: LensProfile; i: number; filter: Filter; loading
 					</td>
 					<td className="overflow-x-scroll mr-[50px] ">
 						<div className="flex items-center space-x-[12px] ">
-							<Avatar profile={profile} />
+							{!loading ? <Avatar profile={profile} /> : <Skeleton width={30} height={20} />}
 
 							<a
 								target="_blank"
-								href={profile ? `https://lenster.xyz/u/${profile?.handle}` : null}
+								href={profile ? `https://www.lensfrens.xyz/${profile?.handle}` : null}
 								rel="noreferrer"
 							>
 								{!loading ? (
