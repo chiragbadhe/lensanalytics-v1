@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { FC } from 'react'
-import Avatar from './Avatar'
+import { Avatar } from './Avatar'
 import { Filter } from '@/types/ui'
 import { LensProfile } from '@/types/lens'
 import Skeleton from 'react-loading-skeleton'
@@ -26,13 +26,13 @@ const ProfileCard: FC<{ profile: LensProfile; i: number; filter: Filter; loading
 					</td>
 					<td className="overflow-x-scroll mr-[50px] ">
 						<div className="flex items-center space-x-[12px] ">
-							{!loading ? <Avatar profile={profile} /> : <Skeleton width={30} height={20} />}
+							{!loading ? (
+								<Avatar height={35} width={35} profile={profile} />
+							) : (
+								<Skeleton width={30} height={20} />
+							)}
 
-							<a
-								target="_blank"
-								href={profile ? `https://www.lensfrens.xyz/${profile?.handle}` : null}
-								rel="noreferrer"
-							>
+							<a target="_blank" href={profile ? `/u/${profile?.handle}` : null} rel="noreferrer">
 								{!loading ? (
 									profile?.handle ? (
 										`@${profile.handle}`

@@ -6,9 +6,9 @@ import Footer from '@/components/Footer'
 import { useQuery } from '@apollo/client'
 import { LensProfile } from '@/types/lens'
 import Header from '@/components/HeaderCard'
+import DownArrow from '../assets/arrow-down.svg'
 import ProfileCard from '@/components/ProfileCard'
 import HeaderStats from '@/components/HeaderStats'
-import DownArrow from '../assets/images/arrow-down.svg'
 import { FC, useEffect, useMemo, useState } from 'react'
 import EXPLORE_PROFILES from '@/queries/explore-profiles'
 
@@ -16,7 +16,7 @@ import SearchCard from '@/components/SearchCard'
 
 const PAGE_LENGTH = 25
 
-const filters: Record<'followers' | 'posts' | 'collects' | 'active', Filter> = {
+const filters: Record<'followers' | 'posts' | 'collects' | 'active' | 'curated', Filter> = {
 	followers: {
 		label: 'Followers',
 		key: 'MOST_FOLLOWERS',
@@ -29,6 +29,13 @@ const filters: Record<'followers' | 'posts' | 'collects' | 'active', Filter> = {
 		item: (profile: LensProfile) => profile.stats.totalPublications,
 	},
 	collects: { label: 'Collects', key: 'MOST_COLLECTS', item: (profile: LensProfile) => profile.stats.totalCollects },
+	curated: {
+		label: 'Curated',
+		key: 'CURATED_PROFILES',
+		item: function (LensProfile: any): number {
+			throw new Error('Function not implemented.')
+		},
+	},
 }
 
 const Home: FC = () => {
@@ -70,9 +77,6 @@ const Home: FC = () => {
 
 	return (
 		<>
-			<Head>
-
-			</Head>
 			<div className="container mx-auto max-w-[1200px]">
 				<div className="px-[20px] sm:px-0">
 					<Header />
@@ -91,21 +95,23 @@ const Home: FC = () => {
 						/>
 
 						{showNavOnScroll ? (
-							<div className="items-center flex flex-col hover:text-white">
-								<Image
-									width={16}
-									height={16}
-									src={DownArrow}
-									alt="down-arrow"
-									className="transform rotate-180"
-								/>
-								<button
-									className="button duration-400 text-[16px] text-[#E7E7E7]/20"
-									onClick={() => window.scrollTo(0, 0)}
-								>
-									Scroll To Top
-								</button>
-							</div>
+							<>
+								<div className="items-center flex flex-col ">
+									<Image
+										width={16}
+										height={16}
+										src={DownArrow}
+										alt="down-arrow"
+										className="transform rotate-180"
+									/>
+									<button
+										className="button duration-400 text-[16px] text-[#E7E7E7]/20"
+										onClick={() => window.scrollTo(0, 0)}
+									>
+										Scroll To Top
+									</button>
+								</div>
+							</>
 						) : (
 							''
 						)}

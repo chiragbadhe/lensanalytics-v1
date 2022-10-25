@@ -10,6 +10,13 @@ export type LensProfile = {
 		}
 		uri?: string
 	}
+	coverPicture?: {
+		original?: {
+			url: string
+			mimeType: string
+		}
+		uri?: string
+	}
 	stats: {
 		totalPosts: number
 		totalFollowers: number
@@ -18,3 +25,4 @@ export type LensProfile = {
 		totalPublications: number
 	}
 }
+
