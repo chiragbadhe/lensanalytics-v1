@@ -60,10 +60,10 @@ const Revenue = (profileId: any) => {
 
 	const followRevenue = getFollowRevenueValue ? getFollowRevenueValue : 0
 
-	const totalRevenue = TotalRevenue(profileId)
+	const totalRevenue = TotalRevenue(profileId).toFixed(1)
 
 	return (
-		<div className="bg-[#101010] rounded-[10px] p-[px] flex space-x-[15px] items-center justify-center sm:row-span-2">
+		<div className="bg-[#101010] rounded-[10px] p-[25px] sm:p-0 flex space-x-[15px] items-center justify-center sm:row-span-2">
 			<p className="flex sm:flex-col space-x-[12px] sm:space-x-0 items-center space-y-[12px]">
 				<Image className="h-[50px] w-[50px]" src={revenue} alt="" />
 
