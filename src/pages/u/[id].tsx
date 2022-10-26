@@ -63,7 +63,7 @@ const Revenue = (profileId: any) => {
 	const totalRevenue = TotalRevenue(profileId)
 
 	return (
-		<div className="bg-[#101010] rounded-[10px] p-[25px] flex space-x-[15px] items-center justify-center sm:row-span-2">
+		<div className="bg-[#101010] rounded-[10px] p-[px] flex space-x-[15px] items-center justify-center sm:row-span-2">
 			<p className="flex sm:flex-col space-x-[12px] sm:space-x-0 items-center space-y-[12px]">
 				<Image className="h-[50px] w-[50px]" src={revenue} alt="" />
 
@@ -91,7 +91,7 @@ const Revenue = (profileId: any) => {
 								</p>
 							</p>
 							<p>
-								<span className="text-[16px]">Publication </span>
+								<span className="text-[16px]">Collects </span>
 								<p>
 									<span>{nFormatter(totalRevenue)}</span>
 									<span className="font-thin opacity-50 text-[16px]">&nbsp; MATIC</span>

@@ -16,7 +16,7 @@ import SearchCard from '@/components/SearchCard'
 
 const PAGE_LENGTH = 25
 
-const filters: Record<'followers' | 'posts' | 'collects' | 'active' | 'curated', Filter> = {
+const filters: Record<'followers' | 'posts' | 'collects' | 'active' , Filter> = {
 	followers: {
 		label: 'Followers',
 		key: 'MOST_FOLLOWERS',
@@ -29,13 +29,13 @@ const filters: Record<'followers' | 'posts' | 'collects' | 'active' | 'curated',
 		item: (profile: LensProfile) => profile.stats.totalPublications,
 	},
 	collects: { label: 'Collects', key: 'MOST_COLLECTS', item: (profile: LensProfile) => profile.stats.totalCollects },
-	curated: {
-		label: 'Curated',
-		key: 'CURATED_PROFILES',
-		item: function (LensProfile: any): number {
-			throw new Error('Function not implemented.')
-		},
-	},
+	// curated: {
+	// 	label: 'Curated',
+	// 	key: 'CURATED_PROFILES',
+	// 	item: function (LensProfile: any): number {
+	// 		throw new Error('Function not implemented.')
+	// 	},
+	// },
 }
 
 const Home: FC = () => {
