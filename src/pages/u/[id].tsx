@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
 import Skeleton from 'react-loading-skeleton'
 import GET_PROFILE from '@/queries/get-profile'
+import TOTAL_REVENUE from '@/queries/total-revenue'
 import FOLLOW_REVENUE from '@/queries/follow-revenue'
 
 import revenue from '../../assets/revenue.svg'
@@ -19,30 +20,87 @@ import publication from '../../assets/publication.svg'
 
 import polygonLogo from '../../assets/polygon.png'
 
+import { useState } from 'react'
+import { nFormatter } from '@/lib/utils'
+import ReactTooltip from 'react-tooltip'
 import { Avatar, Cover } from '@/components/Avatar'
 
+const TotalRevenue = (profileId: any) => {
+	const { Id } = profileId
+	const { data, loading, error, refetch } = useQuery(TOTAL_REVENUE, {
+		variables: { profileId: Id },
+	})
+
+	const getPyblicationRevenue = data && data.profilePublicationRevenue && data.profilePublicationRevenue.items
+
+	const totalRevenue =
+		getPyblicationRevenue &&
+		getPyblicationRevenue
+			.map((mapData: any) => {
+				return +mapData.revenue.total.value
+			})
+			.reduce((a: any, b: any) => a + b, 0)
+
+	return totalRevenue
+}
+
 const Revenue = (profileId: any) => {
+	const [toggleRevenue, setToggleRevenue]: any = useState(null)
 	const { Id } = profileId
 	const { data, loading, error, refetch } = useQuery(FOLLOW_REVENUE, {
 		variables: { profileId: Id },
 	})
-	console.log('data', data, profileId, error)
+
+	const getFollowRevenueValue =
+		data &&
+		data.profileFollowRevenue &&
+		data.profileFollowRevenue.revenue &&
+		data.profileFollowRevenue.revenue.total &&
+		data.profileFollowRevenue.revenue.total.value
+
+	const followRevenue = getFollowRevenueValue ? getFollowRevenueValue : 0
+
+	const totalRevenue = TotalRevenue(profileId)
 
 	return (
 		<div className="bg-[#101010] rounded-[10px] p-[25px] flex space-x-[15px] items-center justify-center sm:row-span-2">
 			<p className="flex sm:flex-col space-x-[12px] sm:space-x-0 items-center space-y-[12px]">
 				<Image className="h-[50px] w-[50px]" src={revenue} alt="" />
 
-				<div>
-					<span className="text-[16px]">Follow Revenue</span>
+				<div className="text-center">
+					<span className="text-[16px] opacity-60">Total Revenue</span>
 					<p className="text-[30px] font-semibold">
-						<span>
-							{data && data.profileFollowRevenue && data.profileFollowRevenue.revenues.value
-								? data.profileFollowRevenue.revenues.value
-								: '0'}{' '}
-						</span>
-						<span className="font-thin opacity-50 text-[24px]">MATIC</span>
+						<span>{nFormatter(totalRevenue + followRevenue)}</span>
+						<span className="font-thin opacity-50 text-[20px]">&nbsp; MATIC</span>
 					</p>
+					<button
+						onClick={() => (!toggleRevenue ? setToggleRevenue(true) : setToggleRevenue(false))}
+						className="text-[14px] opacity-50 mt-[12px] underline"
+					>
+						View Breakdown
+					</button>
+
+					{toggleRevenue ? (
+						<div className="flex text-left space-x-[20px] mt-[12px]">
+							<p>
+								<span className="text-[16px]">Follow</span>
+
+								<p>
+									<span>{nFormatter(followRevenue)}</span>
+									<span className="font-thin opacity-50 text-[16px]">&nbsp; MATIC</span>
+								</p>
+							</p>
+							<p>
+								<span className="text-[16px]">Publication </span>
+								<p>
+									<span>{nFormatter(totalRevenue)}</span>
+									<span className="font-thin opacity-50 text-[16px]">&nbsp; MATIC</span>
+								</p>
+							</p>
+						</div>
+					) : (
+						''
+					)}
 				</div>
 			</p>
 		</div>
@@ -55,8 +113,6 @@ const User = () => {
 	const { data, loading, error, refetch } = useQuery(GET_PROFILE, {
 		variables: { userHandle: id },
 	})
-
-	console.log(`Data for user id : ${id}`, data)
 
 	return (
 		<main>
