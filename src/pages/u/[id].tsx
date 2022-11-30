@@ -25,6 +25,55 @@ import { nFormatter } from '@/lib/utils'
 import ReactTooltip from 'react-tooltip'
 import { Avatar, Cover } from '@/components/Avatar'
 
+const RevenueByPost: any = (profileId: any) => {
+	const [postRevenue, setPostRevenue] = useState(null)
+	const { Id } = profileId
+	const { data, loading, error } = useQuery(TOTAL_REVENUE, {
+		variables: { profileId: Id },
+	})
+
+
+	const getPyblicationRevenue = data && data.profilePublicationRevenue && data.profilePublicationRevenue.items
+
+	console.log({ getPyblicationRevenue })
+
+	if (!getPyblicationRevenue) return 'loading'
+
+	return (
+		<>
+			{getPyblicationRevenue.length ? (
+				getPyblicationRevenue.map((data, i) => {
+					return (
+						<tr
+							key={i}
+							className="text-left border-b-2 border-[#3B3E3E]/50  text-[#A1A1A1] hover:text-[#AAFE2E] duration-300 hover:bg-[#101010]"
+						>
+							<td className=" py-[15px] text-center w-[100px]">{i + 1}</td>
+							<td>
+								<a
+									className=""
+									href={`https://lenster.xyz/posts/${
+										data && data.publication && data.publication.id
+									}`}
+								>
+									{data && data.publication && data.publication.id}{' '}
+								</a>
+							</td>
+							<td className="text-center w-[200px]">
+								{data && data.revenue && data.revenue.total && data.revenue.total.value} MATIC
+							</td>
+						</tr>
+					)
+				})
+			) : (
+				<div>
+					<p className="text-center w-[1100px] mt-[20px]">No posts available.</p>
+				</div>
+			)}
+		</>
+	)
+}
+
 const TotalRevenue = (profileId: any) => {
 	const { Id } = profileId
 	const { data, loading, error, refetch } = useQuery(TOTAL_REVENUE, {
@@ -58,13 +107,13 @@ const Revenue = (profileId: any) => {
 		data.profileFollowRevenue.revenue.total &&
 		data.profileFollowRevenue.revenue.total.value
 
-	const followRevenue = getFollowRevenueValue ? getFollowRevenueValue : 0
+	const followRevenue = getFollowRevenueValue ? getFollowRevenueValue : '0'
 
 	const totalRevenue = TotalRevenue(profileId)
 
 	return (
 		<div className="bg-[#101010] rounded-[10px] p-[25px] sm:p-0 flex space-x-[15px] items-center justify-center sm:row-span-2">
-			<p className="flex sm:flex-col space-x-[12px] sm:space-x-0 items-center space-y-[12px]">
+			<div className="flex sm:flex-col space-x-[12px] sm:space-x-0 items-center space-y-[12px]">
 				<Image className="h-[50px] w-[50px]" src={revenue} alt="" />
 
 				<div className="text-center">
@@ -82,27 +131,27 @@ const Revenue = (profileId: any) => {
 
 					{toggleRevenue ? (
 						<div className="flex text-left space-x-[20px] mt-[12px]">
-							<p>
+							<div>
 								<span className="text-[16px]">Follow</span>
 
 								<p>
 									<span>{nFormatter(followRevenue)}</span>
 									<span className="font-thin opacity-50 text-[16px]">&nbsp; MATIC</span>
 								</p>
-							</p>
-							<p>
+							</div>
+							<div>
 								<span className="text-[16px]">Collects </span>
 								<p>
 									<span>{nFormatter(totalRevenue)}</span>
 									<span className="font-thin opacity-50 text-[16px]">&nbsp; MATIC</span>
 								</p>
-							</p>
+							</div>
 						</div>
 					) : (
 						''
 					)}
 				</div>
-			</p>
+			</div>
 		</div>
 	)
 }
@@ -229,8 +278,8 @@ const User = () => {
 									</div>
 
 									{!loading ? (
-										<div className="flex space-x-[25px] mt-[30px] sm:-mt-[20px]">
-											<div className=" rounded-[10px]  flex px-[15px] items-center justify-center">
+										<div className=" rounded-[10px]  flex px-[15px] items-center justify-center mt-[30px] sm:mt-0">
+											<div className="flex space-x-[25px]  ">
 												<p className="flex flex-col text-right ">
 													<span className="text-[18px] opacity-60"> Followers</span>
 													<span className="text-[30px] font-semibold">
@@ -303,6 +352,23 @@ const User = () => {
 										''
 									)}
 								</div>
+							</div>
+
+							<div className="container mx-auto  overflow-scroll mb-[100px]">
+								<p className="text-[24px]">Posts Revenue</p>
+
+								<table className="table-fixed sm:w-full w-[700px] mt-[20px]">
+									<thead className="bg-[#101010] rounded-sm">
+										<tr className="text-left border-b-2 border-[#3B3E3E]/50 font-bold  text-[#A1A1A1]">
+											<th className=" py-[15px] text-center w-[100px]">Id</th>
+											<th>Post</th>
+											<th className="text-center w-[200px]">Revenue Collected</th>
+										</tr>
+									</thead>
+									<tbody>
+										<RevenueByPost Id={!loading ? data.profile.id : null} />
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
