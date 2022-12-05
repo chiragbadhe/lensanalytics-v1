@@ -32,10 +32,8 @@ const RevenueByPost: any = (profileId: any) => {
 		variables: { profileId: Id },
 	})
 
-
 	const getPyblicationRevenue = data && data.profilePublicationRevenue && data.profilePublicationRevenue.items
 
-	console.log({ getPyblicationRevenue })
 
 	if (!getPyblicationRevenue) return 'loading'
 
@@ -82,6 +80,8 @@ const TotalRevenue = (profileId: any) => {
 
 	const getPyblicationRevenue = data && data.profilePublicationRevenue && data.profilePublicationRevenue.items
 
+	console.log({ getPyblicationRevenue })
+
 	const totalRevenue =
 		getPyblicationRevenue &&
 		getPyblicationRevenue
@@ -107,7 +107,7 @@ const Revenue = (profileId: any) => {
 		data.profileFollowRevenue.revenue.total &&
 		data.profileFollowRevenue.revenue.total.value
 
-	const followRevenue = getFollowRevenueValue ? getFollowRevenueValue : '0'
+	const followRevenue = getFollowRevenueValue ? getFollowRevenueValue : 0
 
 	const totalRevenue = TotalRevenue(profileId)
 
@@ -354,9 +354,39 @@ const User = () => {
 								</div>
 							</div>
 
-							<div className="container mx-auto  overflow-scroll mb-[100px]">
-								<p className="text-[24px]">Posts Revenue</p>
+							{/* <div className="container mx-auto  overflow-scroll mb-[70px]">
+								<p className="text-[24px]">Revenue Breakdown</p>
 
+								<div className="grid grid-cols-1 sm:grid-cols-3 gap-[35px] mt-[20px]">
+									<div className="bg-[#101010] rounded-[10px] p-[25px] flex space-x-[15px] items-center justify-center ">
+										<Image loading="lazy" src={collects} height={50} width={50} alt="" />{' '}
+										<p className="flex flex-col ">
+											<span className="text-[16px] opacity-60">Follow Revenue </span>
+											<span className="text-[30px] font-semibold">234</span>
+										</p>
+									</div>
+									<div className="bg-[#101010] rounded-[10px] p-[25px] flex space-x-[15px] items-center justify-center ">
+										<Image loading="lazy" src={collects} height={50} width={50} alt="" />{' '}
+										<p className="flex flex-col ">
+											<span className="text-[16px] opacity-60">Collect Revenue </span>
+											<span className="text-[30px] font-semibold">234</span>
+										</p>
+									</div>
+									<div className="bg-[#101010] rounded-[10px] p-[25px] flex space-x-[15px] items-center justify-center ">
+										<Image loading="lazy" src={collects} height={50} width={50} alt="" />{' '}
+										<p className="flex flex-col ">
+											<span className="text-[16px] opacity-60">Mirror Revenue </span>
+											<span className="text-[30px] font-semibold">234</span>
+										</p>
+									</div>
+								</div>
+							</div> */}
+
+							<div className="container mx-auto  overflow-scroll mb-[100px]">
+								<div className="flex justify-between items-center">
+									<p className="text-[24px]">Posts Revenue</p>
+									<p>Total: 405k</p>
+								</div>
 								<table className="table-fixed sm:w-full w-[700px] mt-[20px]">
 									<thead className="bg-[#101010] rounded-sm">
 										<tr className="text-left border-b-2 border-[#3B3E3E]/50 font-bold  text-[#A1A1A1]">
