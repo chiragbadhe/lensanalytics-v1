@@ -385,7 +385,6 @@ const User = () => {
 							<div className="container mx-auto  overflow-scroll mb-[100px]">
 								<div className="flex justify-between items-center">
 									<p className="text-[24px]">Posts Revenue</p>
-									<p>Total: 405k</p>
 								</div>
 								<table className="table-fixed sm:w-full w-[700px] mt-[20px]">
 									<thead className="bg-[#101010] rounded-sm">
